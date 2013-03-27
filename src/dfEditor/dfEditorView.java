@@ -32,7 +32,8 @@ import dfEditor.io.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.*;
 import javax.swing.JOptionPane;
-
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
 /**
  * The application's main frame.
  */
@@ -396,8 +397,8 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         JFileChooser chooser = fileChooser;
 
         CustomFilter filter = new CustomFilter();
-        filter.addExtension(CustomFilter.EXT_ANIM);
-        filter.addExtension(CustomFilter.EXT_SPRITE);
+        filter.addExtension(CustomFilter.eExtension.Anims);
+        filter.addExtension(CustomFilter.eExtension.Sprites);
         chooser.resetChoosableFileFilters();
         chooser.setFileFilter(filter);
         chooser.setDialogTitle("Load a spritesheet / animation set");
@@ -412,22 +413,33 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
                 java.awt.Component task = null;
 
                 boolean bLoaded = false;
-                if (Utils.getExtension(selectedFile).equals(CustomFilter.EXT_ANIM)) // meh
+                
+                try
                 {
-                    AnimationController animController = new AnimationController(new CommandManager(undoMenuItem, redoMenuItem), false, helpLabel, this, fileChooser);
-                    try {
-                        AnimationSetReader reader = new AnimationSetReader(selectedFile);
-                        bLoaded = animController.load(reader);                    
-                        task = animController;
-                        if (helpLabel != null)
-                            helpLabel.setText("Loaded animations " + selectedFile.toString());
-                    } catch (Exception e) {
-                        javax.swing.JOptionPane.showMessageDialog(null, "Could not load animation file!", "File error", JOptionPane.ERROR_MESSAGE);
-                    }                    
-                }
-                else if (Utils.getExtension(selectedFile).equals(CustomFilter.EXT_SPRITE))
-                {
-                    JFrame frame = this.getFrame();
+                    DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                    Document doc = builder.parse(selectedFile);
+                    
+                    Element root = doc.getDocumentElement();
+                    String rootName = root.getTagName();
+                    if(rootName == "animations")
+                    {
+                        AnimationController animController = new AnimationController(new CommandManager(undoMenuItem, redoMenuItem), false, helpLabel, this, fileChooser);
+                        try
+                        {
+                            AnimationSetReader reader = new AnimationSetReader(selectedFile);
+                            bLoaded = animController.load(reader);                    
+                            task = animController;
+                            if (helpLabel != null)
+                                helpLabel.setText("Loaded animations " + selectedFile.toString());
+                        }
+                        catch (Exception e)
+                        {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Could not load animation file!", "File error", JOptionPane.ERROR_MESSAGE);
+                        }                       
+                    }
+                    else if(rootName == "img")
+                    {
+                        JFrame frame = this.getFrame();
                     SingleOrMultiDialog dialog = new SingleOrMultiDialog(frame, true);
                     dialog.setLocationRelativeTo(frame);
                                         
@@ -457,6 +469,11 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
 
                     if (helpLabel != null)
                         helpLabel.setText("Loaded spritesheet " + selectedFile.toString());
+                    }                    
+                }
+                catch (Exception e)
+                {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Could not load file!", "File error", JOptionPane.ERROR_MESSAGE);
                 }
 
                 if (bLoaded && task != null)

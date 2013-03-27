@@ -25,6 +25,9 @@ package dfEditor.animation;
  */
 public interface AnimationDataListener
 {
+    public void keyframeAdded(Animation aAnimation, KeyFrame aKeyFrame);
+    public void keyframeRemoved(Animation aAnimation, KeyFrame aKeyFrame);
+    public void keyframeOrderChanged(Animation aAnimation);
     public void cellAdded(Animation aAnimation, AnimationCell aCell);
     public void cellRemoved(Animation aAnimation, AnimationCell aCell);
     public void cellOrderChanged(Animation aAnimation);

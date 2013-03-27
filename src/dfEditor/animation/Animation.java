@@ -27,10 +27,12 @@ import dfEditor.CustomComponents.NamedElement;
  * @author s4m20
  */
 public class Animation implements NamedElement
-{
+{    
     private String name = null;
+    private ArrayList<KeyFrame> keyframeList;
     private ArrayList<AnimationCell> cellList;
-    private int currentIndex;
+    private int currentKeyIndex;
+    private int currentCellIndex;
     private ArrayList<AnimationDataListener> animationListeners;
     private int loops = 0;
 
@@ -38,12 +40,18 @@ public class Animation implements NamedElement
     {
         animationListeners = new ArrayList<AnimationDataListener>();
         setName(aName);
+        keyframeList = new ArrayList<KeyFrame>();
         cellList = new ArrayList<AnimationCell>();
     }
     
     public Animation copy()
     {
         Animation copy = new Animation(this.getName());
+        
+        for (int i=0; i<keyframeList.size(); ++i)
+        {
+            copy.addKeyFrame(this.getKeyFrameAtIndex(i).copy());
+        }
         
         for (int i=0; i<cellList.size(); ++i)
         {
@@ -67,13 +75,42 @@ public class Animation implements NamedElement
     {
         return getName();
     }
+    
+    public void addKeyFrame(KeyFrame aKeyFrame)
+    {
+        keyframeList.add(aKeyFrame);
+        for (int i=0; i<animationListeners.size(); ++i)
+            animationListeners.get(i).keyframeAdded(this, aKeyFrame);
+        currentKeyIndex = keyframeList.size() - 1;
+    }
 
     public void addCell(AnimationCell aCell)
     {       
         cellList.add(aCell);
         for (int i=0; i<animationListeners.size(); ++i)
             animationListeners.get(i).cellAdded(this, aCell);
-         currentIndex = cellList.size() - 1;
+         currentCellIndex = cellList.size() - 1;
+    }
+    
+    public void moveKeyFrame(int aFromIndex, int aToIndex)
+    {
+        if (aFromIndex < aToIndex)
+            aToIndex --;
+        
+        if (    aFromIndex >= 0 && aFromIndex < keyframeList.size()
+             && aToIndex >= 0 && aToIndex < keyframeList.size() )
+        {
+            KeyFrame frame = keyframeList.get(aFromIndex);
+            keyframeList.remove(aFromIndex);
+            
+            if (aToIndex < keyframeList.size())
+                keyframeList.add(aToIndex, frame);
+            else
+                keyframeList.add(frame);
+            
+            for (int i=0; i<animationListeners.size(); ++i)
+                animationListeners.get(i).keyframeOrderChanged(this);
+        }
     }
 
     public void moveCell(int aFromIndex, int aToIndex)
@@ -96,29 +133,53 @@ public class Animation implements NamedElement
                 animationListeners.get(i).cellOrderChanged(this);
         }
     }
+    
+    public void removeKeyFrame(KeyFrame aKeyFrame)
+    {
+        int index = keyframeList.indexOf(aKeyFrame);
+
+        keyframeList.remove(aKeyFrame);        
+        currentKeyIndex = index-1;
+
+        for (int i=0; i<animationListeners.size(); ++i)
+            animationListeners.get(i).keyframeRemoved(this, aKeyFrame);       
+    }
 
     public void removeCell(AnimationCell aCell)
     {
         int index = cellList.indexOf(aCell);
 
         cellList.remove(aCell);        
-        currentIndex = index-1;
+        currentCellIndex = index-1;
 
         for (int i=0; i<animationListeners.size(); ++i)
             animationListeners.get(i).cellRemoved(this, aCell);
        
     }
+    
+    public int getCurrentKeyFrameIndex()
+    {
+        return currentKeyIndex;
+    }
+
+    public void setCurrentKeyFrameIndex(int index)
+    {
+        if (index >= 0 && index < keyframeList.size())
+        {
+            currentKeyIndex = index;          
+        }
+    }
 
     public int getCurrentCellIndex()
     {
-        return currentIndex;
+        return currentCellIndex;
     }
 
     public void setCurrentCellIndex(int index)
     {
         if (index >= 0 && index < cellList.size())
         {
-            currentIndex = index;          
+            currentCellIndex = index;          
         }
     }
 
@@ -143,21 +204,45 @@ public class Animation implements NamedElement
         return cellList.size();
     }
 
+    public KeyFrame getCurrentKeyFrame()
+    {
+        if (currentKeyIndex >= 0 && keyframeList.size() > 0)
+            return keyframeList.get(currentKeyIndex);
+
+        return null;
+    }
+
+    public KeyFrame getNextKeyFrame()
+    {
+        if (++currentKeyIndex < keyframeList.size())
+          return keyframeList.get(currentKeyIndex);
+
+        currentKeyIndex--;
+        return null;
+    }
+    
     public AnimationCell getCurrentCell()
     {
-        if (currentIndex >= 0 && cellList.size() > 0)
-            return cellList.get(currentIndex);
+        if (currentCellIndex >= 0 && cellList.size() > 0)
+            return cellList.get(currentCellIndex);
 
         return null;
     }
 
     public AnimationCell getNextCell()
     {
-        if (++currentIndex < cellList.size())
-          return cellList.get(currentIndex);
+        if (++currentCellIndex < cellList.size())
+          return cellList.get(currentCellIndex);
 
-        currentIndex--;
+        currentCellIndex--;
         return null;
+    }
+    
+    public KeyFrame getKeyFrameAtIndex(int aIndex)
+    {
+        if (aIndex < 0 || aIndex >= keyframeList.size())
+            return null;
+        return keyframeList.get(aIndex);
     }
     
     public AnimationCell getCellAtIndex(int aIndex)

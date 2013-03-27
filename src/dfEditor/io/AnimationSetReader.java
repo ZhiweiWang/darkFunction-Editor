@@ -66,7 +66,7 @@ public class AnimationSetReader
             }
         }
 
-        String fullFileName = file.getParentFile().getPath() + "/" + spriteSheetName;
+        String fullFileName = file.getParentFile().getPath() + "/" + spriteSheetName + "." + CustomFilter.EXT_SPRITE;
 
         return fullFileName;
     }
@@ -74,45 +74,127 @@ public class AnimationSetReader
     public ArrayList<Animation> getAnimations(SpriteTree aSpriteTree, BufferedImage aImage) throws Exception
     {
         ArrayList animations = new ArrayList<Animation>();
-        NodeList animNodeList = doc.getElementsByTagName("anim");
+        NodeList animNodeList = doc.getDocumentElement().getChildNodes();
 
         for (int i=0; i<animNodeList.getLength(); ++i)
         {
             Node animNode = animNodeList.item(i);
-            Animation animation = new Animation( ((Element)animNode).getAttribute("name") );
-
-            String loopsStr = ((Element)animNode).getAttribute("loops");
-            if (loopsStr != null && loopsStr.length() != 0)
+            
+            Animation animation = null;
+            
+            String nodeName = animNode.getNodeName();
+            if      (nodeName == "simple_anim")
             {
-                int loops = Integer.parseInt(loopsStr);
-                animation.setLoops(loops);
+                animation = ParseAsSimpleAnim(animNode, aSpriteTree, aImage);
             }
-
-            NodeList cellNodeList = animNode.getChildNodes();
-
-            for (int j=0; j<cellNodeList.getLength(); ++j)
+            else if (nodeName == "compound_anim")
             {
-                Node cellNode = cellNodeList.item(j);
-                if (cellNode.getNodeType() != Node.ELEMENT_NODE)
-                    continue;
+                animation = ParseAsCompoundAnim(animNode, aSpriteTree, aImage);
+            }
+            else
+                continue;
+            
+            animations.add(animation);
+        }
+        
+        return animations;
+    }
+    
+    private Animation ParseAsSimpleAnim(Node animNode, SpriteTree aSpriteTree, BufferedImage aImage)
+    {
+        Animation animation = new Animation( ((Element)animNode).getAttribute("name") );
 
+        String loopsStr = ((Element)animNode).getAttribute("loops");
+        if (loopsStr != null && loopsStr.length() != 0)
+        {
+            int loops = Integer.parseInt(loopsStr);
+            animation.setLoops(loops);
+        }
+
+        NodeList nodeList = animNode.getChildNodes();
+
+        for (int j=0; j<nodeList.getLength(); ++j)
+        {
+            Node currentNode = nodeList.item(j);
+            
+            if (currentNode.getNodeType() != Node.ELEMENT_NODE)
+                continue;
+            
+            String nodeName = currentNode.getNodeName();
+            if      (nodeName == "keyframe")
+            {
+                KeyFrame frame = new KeyFrame();
+                frame.name = ((Element)currentNode).getAttribute("name");
+                frame.time = Float.parseFloat(((Element)currentNode).getAttribute("time"));
+                animation.addKeyFrame(frame);
+            }
+            else if(nodeName == "spr")
+            {
                 AnimationCell cell = new AnimationCell();
-                cell.setDelay( Integer.parseInt(((Element)cellNode).getAttribute("delay")) );
+                cell.setDelay( Integer.parseInt(((Element)currentNode).getAttribute("delay")) );
+                ParseSprite(currentNode, aSpriteTree, aImage, cell);
+                animation.addCell(cell);
+            }
+        }
+        
+        return animation;
+    }
+    
+    private Animation ParseAsCompoundAnim(Node animNode, SpriteTree aSpriteTree, BufferedImage aImage)
+    {
+        Animation animation = new Animation( ((Element)animNode).getAttribute("name") );
 
-                NodeList spriteNodeList = cellNode.getChildNodes();
+        String loopsStr = ((Element)animNode).getAttribute("loops");
+        if (loopsStr != null && loopsStr.length() != 0)
+        {
+            int loops = Integer.parseInt(loopsStr);
+            animation.setLoops(loops);
+        }
+
+        NodeList nodeList = animNode.getChildNodes();
+
+        for (int j=0; j<nodeList.getLength(); ++j)
+        {
+            Node currentNode = nodeList.item(j);
+            if (currentNode.getNodeType() != Node.ELEMENT_NODE)
+                continue;
+            
+            String nodeName = currentNode.getNodeName();
+            if      (nodeName == "keyframe")
+            {
+                KeyFrame frame = new KeyFrame();
+                frame.name = ((Element)currentNode).getAttribute("name");
+                frame.time = Float.parseFloat(((Element)currentNode).getAttribute("time"));
+                animation.addKeyFrame(frame);
+            }
+            else if(nodeName == "cell")
+            {
+                AnimationCell cell = new AnimationCell();
+                cell.setDelay( Integer.parseInt(((Element)currentNode).getAttribute("delay")) );
+
+                NodeList spriteNodeList = currentNode.getChildNodes();
                 for (int k=0; k<spriteNodeList.getLength(); ++k)
-                {
-                    Node spriteNode = spriteNodeList.item(k);
-                    if (spriteNode.getNodeType() != Node.ELEMENT_NODE)
-                        continue;
-                        
-                    CustomNode treeNode = aSpriteTree.getNodeForPath(
-                            ((Element)spriteNode).getAttribute("name")
-                            );
+                    ParseSprite(spriteNodeList.item(k), aSpriteTree, aImage, cell);
 
-                    if (treeNode != null && treeNode.isLeaf())
-                    {
-                        GraphicObject spriteArea = (GraphicObject)treeNode.getCustomObject();
+                animation.addCell(cell);
+            }            
+        }
+        
+        return animation;
+    }
+    
+    private void ParseSprite(Node spriteNode, SpriteTree aSpriteTree, BufferedImage aImage, AnimationCell cell)
+    {
+        if (spriteNode.getNodeType() != Node.ELEMENT_NODE)
+            return;
+        
+        CustomNode treeNode = aSpriteTree.getNodeForPath(
+                    ((Element)spriteNode).getAttribute("name")
+                    );
+
+        if (treeNode != null && treeNode.isLeaf())
+        {
+            GraphicObject spriteArea = (GraphicObject)treeNode.getCustomObject();
 
 //                        boolean centreAnchor = false;
 //                        String anchorString = ((Element)spriteNode).getAttribute("anchor");
@@ -121,60 +203,52 @@ public class AnimationSetReader
 //                            if (anchorString.equals("centre"))
 //                                centreAnchor = true;
 //                        }
-                        
-                        int x=0;
-                        int y=0;
-                        int z=0;
-                        try {
-                            x = Integer.parseInt(((Element)spriteNode).getAttribute("x"));
-                            y = Integer.parseInt(((Element)spriteNode).getAttribute("y"));   
-                            z = Integer.parseInt(((Element)spriteNode).getAttribute("z"));   
-                        } catch (NumberFormatException e) {}
-                        
-                        
-                        Rectangle r = spriteArea.getRect();
-                                                
-                        if (version >= 1.2)
-                        {
-                            x -= r.width/2;
-                            y -= r.height/2;                            
-                        }
-                                               
-                        SpriteGraphic graphic = new SpriteGraphic(aImage, new Point(x, y), r);
-                        
-                        float angle = 0;
-                        String angleString = ((Element)spriteNode).getAttribute("angle");
-                        if (angleString != null && angleString.length() != 0)
-                            angle = Float.parseFloat(angleString);                        
-                        graphic.setAngle(angle);
-                        graphic.saveAngle();
-                        
-                        boolean flipH = false;
-                        boolean flipV = false;
-                        
-                        String flipHString = ((Element)spriteNode).getAttribute("flipH");
-                        String flipVString = ((Element)spriteNode).getAttribute("flipV");
-                        if (flipHString != null && flipHString.length() > 0)
-                            flipH = 0 != Integer.parseInt(flipHString);                                         
-                        if (flipVString != null && flipVString.length() > 0)
-                            flipV = 0 != Integer.parseInt(flipVString);                                         
-                        
-                        if (flipV)
-                            graphic.flip(false);
-                        if (flipH)
-                            graphic.flip(true);                            
-                        
-                        cell.addSprite(treeNode, graphic);
-                        cell.setZOrder(graphic, z);
-                    }
-                }
 
-                animation.addCell(cell);
+            int x=0;
+            int y=0;
+            int z=0;
+            try {
+                x = Integer.parseInt(((Element)spriteNode).getAttribute("x"));
+                y = Integer.parseInt(((Element)spriteNode).getAttribute("y"));   
+                z = Integer.parseInt(((Element)spriteNode).getAttribute("z"));   
+            } catch (NumberFormatException e) {}
+
+
+            Rectangle r = spriteArea.getRect();
+
+            if (version >= 1.2)
+            {
+                x -= r.width/2;
+                y -= r.height/2;                            
             }
-            animations.add(animation);
+
+            SpriteGraphic graphic = new SpriteGraphic(aImage, new Point(x, y), r);
+
+            float angle = 0;
+            String angleString = ((Element)spriteNode).getAttribute("angle");
+            if (angleString != null && angleString.length() != 0)
+                angle = Float.parseFloat(angleString);                        
+            graphic.setAngle(angle);
+            graphic.saveAngle();
+
+            boolean flipH = false;
+            boolean flipV = false;
+
+            String flipHString = ((Element)spriteNode).getAttribute("flipH");
+            String flipVString = ((Element)spriteNode).getAttribute("flipV");
+            if (flipHString != null && flipHString.length() > 0)
+                flipH = 0 != Integer.parseInt(flipHString);                                         
+            if (flipVString != null && flipVString.length() > 0)
+                flipV = 0 != Integer.parseInt(flipVString);                                         
+
+            if (flipV)
+                graphic.flip(false);
+            if (flipH)
+                graphic.flip(true);                            
+
+            cell.addSprite(treeNode, graphic);
+            cell.setZOrder(graphic, z);
         }
-        
-        return animations;
     }
 
 //    public ArrayList<Animation> getAnimations()

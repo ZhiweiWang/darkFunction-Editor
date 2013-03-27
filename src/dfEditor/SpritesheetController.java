@@ -366,6 +366,21 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
         imageButton = DropDownButtonFactory.createDropDownButton(icon, imagePopup)
         ;
         addFolderButton = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        Grid_Create = new javax.swing.JButton();
+        Grid_SpriteSizeX = new javax.swing.JSpinner();
+        Grid_SpriteSizeY = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        Grid_NSprites = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        Grid_NColumns = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        Grid_PaddingX = new javax.swing.JSpinner();
+        Grid_PaddingY = new javax.swing.JSpinner();
+        jLabel6 = new javax.swing.JLabel();
+        Grid_Offset = new javax.swing.JSpinner();
 
         spritePopupMenu.setName("spritePopupMenu"); // NOI18N
 
@@ -462,11 +477,11 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
         viewPanel.setLayout(viewPanelLayout);
         viewPanelLayout.setHorizontalGroup(
             viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 678, Short.MAX_VALUE)
+            .addGap(0, 858, Short.MAX_VALUE)
         );
         viewPanelLayout.setVerticalGroup(
             viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGap(0, 525, Short.MAX_VALUE)
         );
 
         jSplitPane1.setRightComponent(viewPanel);
@@ -525,7 +540,7 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel2);
@@ -596,6 +611,115 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
             }
         });
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel3.border.title"))); // NOI18N
+        jPanel3.setToolTipText(resourceMap.getString("jPanel3.toolTipText")); // NOI18N
+        jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setPreferredSize(new java.awt.Dimension(878, 86));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        Grid_Create.setText(resourceMap.getString("Grid_Create.text")); // NOI18N
+        Grid_Create.setFocusable(false);
+        Grid_Create.setName("Grid_Create"); // NOI18N
+        Grid_Create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Grid_CreateActionPerformed(evt);
+            }
+        });
+
+        Grid_SpriteSizeX.setName("Grid_SpriteSizeX"); // NOI18N
+
+        Grid_SpriteSizeY.setName("Grid_SpriteSizeY"); // NOI18N
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        Grid_NSprites.setName("Grid_NSprites"); // NOI18N
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        Grid_NColumns.setName("Grid_NColumns"); // NOI18N
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        Grid_PaddingX.setName("Grid_PaddingX"); // NOI18N
+
+        Grid_PaddingY.setName("Grid_PaddingY"); // NOI18N
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+
+        Grid_Offset.setName("Grid_Offset"); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(7, 7, 7)
+                .addComponent(Grid_SpriteSizeX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(Grid_SpriteSizeY, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Grid_PaddingX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Grid_PaddingY, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Grid_Offset, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(142, 142, 142)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Grid_NSprites, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Grid_NColumns, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Grid_Create, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Grid_SpriteSizeX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Grid_Create)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Grid_PaddingX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Grid_PaddingY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Grid_Offset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Grid_NSprites, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Grid_NColumns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Grid_SpriteSizeY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(91, 91, 91))
+        );
+
+        jLabel4.getAccessibleContext().setAccessibleName(resourceMap.getString("jLabel4.AccessibleContext.accessibleName")); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -604,21 +728,24 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(addSpriteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addFolderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(removeSpriteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 534, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 710, Short.MAX_VALUE)
                         .addComponent(imageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(zoomInButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(zoomOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(10, 10, 10))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -632,7 +759,9 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
                     .addComponent(addFolderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(imageButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -640,7 +769,7 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 835, Short.MAX_VALUE)
+            .addGap(0, 1009, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, 0)
@@ -649,7 +778,7 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
+            .addGap(0, 646, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, 0)
@@ -715,6 +844,55 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
     private void imageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imageButtonActionPerformed
         imagePopup.show(imageButton, 0, imageButton.getHeight());
     }//GEN-LAST:event_imageButtonActionPerformed
+
+private void Grid_CreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Grid_CreateActionPerformed
+        Integer nSprites = (Integer)Grid_NSprites.getValue();
+        Integer nColumns = (Integer)Grid_NColumns.getValue();
+        Integer size_x   = (Integer)Grid_SpriteSizeX.getValue();
+        Integer size_y   = (Integer)Grid_SpriteSizeY.getValue();
+        Integer pad_x    = (Integer)Grid_PaddingX.getValue();
+        Integer pad_y    = (Integer)Grid_PaddingY.getValue();
+        Integer Offset   = (Integer)Grid_Offset.getValue();
+        
+        if(nSprites > 0 && nColumns > 0 && size_x > 0 && size_y > 0)
+        {                    
+            CustomNode parentNode = (CustomNode)nameTree.getSelectedNodeDir();
+            if (parentNode == null)
+                parentNode = _lastSelectedDirNode;
+
+            if (parentNode == null)
+                parentNode = (CustomNode)nameTree.getModel().getRoot();
+            
+            
+            int nRows = (nSprites / nColumns) + (((nSprites + Offset) % nColumns) > 0 ? 1 : 0);
+            Offset = Offset%nColumns;
+            
+            Integer nCreated = 0;
+            for(int y = 0; y<nRows; ++y)
+            {
+                for(int x=Offset; x<nColumns; ++x)
+                {
+                    int TopLX = pad_x + x * (size_x + pad_x);
+                    int TopLY = pad_y + y * (size_y + pad_y);
+                    
+                    java.awt.Rectangle rect = new java.awt.Rectangle(TopLX, TopLY, size_x, size_y);
+                    SelectionBox box = new SelectionBox(rect, java.awt.Color.blue);
+
+                    cmdManager.execute(new AddGraphicToSheetCommand(nameTree, parentNode, viewPanel, box));
+                    CustomNode child = (CustomNode)parentNode.getLastChild();
+                    child.setUserObject(nCreated.toString());
+                    
+                    box.setColour(child.getColour());
+                    viewPanel.selectGraphic(box);
+                    
+                    if(++nCreated >= nSprites)
+                        return;
+                }
+                
+                Offset = 0;
+            }
+        }
+}//GEN-LAST:event_Grid_CreateActionPerformed
 
     private void addDirToSelectedNode()
     {
@@ -861,7 +1039,7 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
         SpritesheetWriter writer = new SpritesheetWriter();
         try 
         {
-            writer.createSpriteSheet(aFile, savedImageFile.getName(), nameTree, viewPanel.getImage().getWidth(), viewPanel.getImage().getHeight());
+            writer.createSpriteSheet(aFile, savedImageFile, nameTree, viewPanel.getImage().getWidth(), viewPanel.getImage().getHeight());
         } 
         catch (IOException e)
         {
@@ -896,13 +1074,13 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
         JFileChooser chooser = fileChooser;
         
         CustomFilter filter = new CustomFilter();
-        filter.addExtension(CustomFilter.EXT_SPRITE);
+        filter.addExtension(CustomFilter.eExtension.Sprites);
         chooser.resetChoosableFileFilters();
         chooser.setFileFilter(filter);
         chooser.setDialogType(JFileChooser.SAVE_DIALOG);
         chooser.setApproveButtonText("Save coordinates");
         chooser.setDialogTitle("Save spritesheet");
-        chooser.setSelectedFile(new File("newSpriteSheet.sprites"));
+        chooser.setSelectedFile(new File("newSpriteSheet." + CustomFilter.EXT_SPRITE));
         JFrame mainFrame = dfEditorApp.getApplication().getMainFrame();
         while (true)
         {
@@ -1160,14 +1338,29 @@ public class SpritesheetController extends dfEditorPanel implements ImageModifie
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Grid_Create;
+    private javax.swing.JSpinner Grid_NColumns;
+    private javax.swing.JSpinner Grid_NSprites;
+    private javax.swing.JSpinner Grid_Offset;
+    private javax.swing.JSpinner Grid_PaddingX;
+    private javax.swing.JSpinner Grid_PaddingY;
+    private javax.swing.JSpinner Grid_SpriteSizeX;
+    private javax.swing.JSpinner Grid_SpriteSizeY;
     private javax.swing.JMenuItem addDirItem;
     private javax.swing.JButton addFolderButton;
     private javax.swing.JButton addSpriteButton;
     private javax.swing.JMenuItem addSpriteItem;
     private javax.swing.JPopupMenu dirPopupMenu;
     private javax.swing.JButton imageButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;

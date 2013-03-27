@@ -76,18 +76,45 @@ public class AnimationSetWriter
 
     private void writeAnimToXml(XmlWriter aXmlWriter, Animation aAnimation) throws IOException
     {
-         aXmlWriter.writeEntity("anim");
-         aXmlWriter.writeAttribute("name", aAnimation.getName());
-         aXmlWriter.writeAttribute("loops", aAnimation.getLoops());
-
-         int backupIndex = aAnimation.getCurrentCellIndex();
+         boolean bIsSimple = true;
+         
          aAnimation.setCurrentCellIndex(0);
          AnimationCell cell = aAnimation.getCurrentCell();
          while(cell !=  null)
          {
-            aXmlWriter.writeEntity("cell");
-            aXmlWriter.writeAttribute("index", aAnimation.getCurrentCellIndex());
-            aXmlWriter.writeAttribute("delay", cell.getDelay());
+             if(cell.getGraphicList().size() > 1)
+             {
+                 bIsSimple = false;
+                 break;
+             }
+             cell = aAnimation.getNextCell();
+         }
+         aXmlWriter.writeEntity((bIsSimple ? "simple" : "compound") + "_anim");
+         aXmlWriter.writeAttribute("name", aAnimation.getName());
+         aXmlWriter.writeAttribute("loops", aAnimation.getLoops());
+         
+         aAnimation.setCurrentKeyFrameIndex(0);
+         KeyFrame frame = aAnimation.getCurrentKeyFrame();
+         while(frame != null)
+         {
+            aXmlWriter.writeEntity("keyframe");
+            aXmlWriter.writeAttribute("name", frame.name);
+            aXmlWriter.writeAttribute("time", frame.time);
+            aXmlWriter.endEntity();
+            frame = aAnimation.getNextKeyFrame();
+         }
+         
+         int backupIndex = aAnimation.getCurrentCellIndex();
+         aAnimation.setCurrentCellIndex(0);
+         cell = aAnimation.getCurrentCell();
+         while(cell !=  null)
+         {
+            if(!bIsSimple)
+            {
+                aXmlWriter.writeEntity("cell");
+                aXmlWriter.writeAttribute("index", aAnimation.getCurrentCellIndex());
+                aXmlWriter.writeAttribute("delay", cell.getDelay());
+            }
 
             ArrayList<GraphicObject> graphicList = cell.getGraphicList();
             for (int i=0; i<graphicList.size(); ++i)
@@ -107,17 +134,18 @@ public class AnimationSetWriter
                 if (graphic.isFlippedH())
                     aXmlWriter.writeAttribute("flipH", graphic.isFlippedH() ? 1 : 0);
                 
+                if(bIsSimple)
+                    aXmlWriter.writeAttribute("delay", cell.getDelay());
+                
                 aXmlWriter.endEntity();
             }
 
-            aXmlWriter.endEntity();
+            if(!bIsSimple)
+                aXmlWriter.endEntity();
 
             cell = aAnimation.getNextCell();
          }
 
          aXmlWriter.endEntity();
     }
-
-    
-
 }

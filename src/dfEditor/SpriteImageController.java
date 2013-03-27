@@ -114,7 +114,7 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
         SpritesheetWriter writer = new SpritesheetWriter();
         try 
         {
-            writer.createSpriteSheet(aFile, savedImageFile.getName(), nameTree, viewPanel.getImage().getWidth(), viewPanel.getImage().getHeight());
+            writer.createSpriteSheet(aFile, savedImageFile, nameTree, viewPanel.getImage().getWidth(), viewPanel.getImage().getHeight());
         } 
         catch (IOException e)
         {
@@ -149,13 +149,13 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
         JFileChooser chooser = fileChooser;
         
         CustomFilter filter = new CustomFilter();
-        filter.addExtension(CustomFilter.EXT_SPRITE);
+        filter.addExtension(CustomFilter.eExtension.Sprites);
         chooser.resetChoosableFileFilters();
         chooser.setFileFilter(filter);
         chooser.setDialogType(JFileChooser.SAVE_DIALOG);
         chooser.setApproveButtonText("Save coordinates");
         chooser.setDialogTitle("Save spritesheet");
-        chooser.setSelectedFile(new File("newSpriteSheet.sprites"));
+        chooser.setSelectedFile(new File("newSpriteSheet." + CustomFilter.EXT_SPRITE));
         JFrame mainFrame = dfEditorApp.getApplication().getMainFrame();
         while (true)
         {
@@ -734,6 +734,8 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
         nameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
         nameTree.setAutoscrolls(true);
 
+        nameTree.setDragEnabled(true);
+
         nameTree.setDropMode(javax.swing.DropMode.ON);
 
         nameTree.setEditable(true);
@@ -765,11 +767,11 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
         viewPanel.setLayout(viewPanelLayout);
         viewPanelLayout.setHorizontalGroup(
             viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 624, Short.MAX_VALUE)
+            .addGap(0, 658, Short.MAX_VALUE)
         );
         viewPanelLayout.setVerticalGroup(
             viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 345, Short.MAX_VALUE)
+            .addGap(0, 349, Short.MAX_VALUE)
         );
 
         jSplitPane1.setRightComponent(viewPanel);
@@ -907,7 +909,7 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
                     .addComponent(minSpacingField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(packButton)
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(362, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -937,7 +939,7 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
                 .addContainerGap()
                 .addGroup(spriteImageControllerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(spriteImageControllerLayout.createSequentialGroup()
-                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(spriteImageControllerLayout.createSequentialGroup()
                         .addComponent(addSpriteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -945,7 +947,7 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
                         .addComponent(addFolderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(removeSpriteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 547, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 581, Short.MAX_VALUE)
                         .addComponent(zoomInButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(zoomOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -965,7 +967,7 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
                     .addComponent(removeSpriteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addFolderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -975,7 +977,7 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
+            .addGap(0, 809, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, 0)

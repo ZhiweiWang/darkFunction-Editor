@@ -25,19 +25,14 @@ import java.awt.Color;
 public class CustomNode extends DefaultMutableTreeNode
 {
     private Color colour = Color.BLUE;
-    private int childDirUniqueID;
-    private int childLeafUniqueID;
     private boolean isLeaf;
     private Object _object;
-
 
     public CustomNode(Object userObject, boolean allowsChildren)
     {
        super(userObject, allowsChildren);
 
        isLeaf = !allowsChildren;
-       childDirUniqueID = 0;
-       childLeafUniqueID = 0;
     }
 
     @Override
@@ -48,13 +43,13 @@ public class CustomNode extends DefaultMutableTreeNode
 
     public String suggestNameForChildLeaf()
     {
-        return new String(""+childLeafUniqueID++);
+        return new String(""+getChildCount());
 
     }
 
     public String suggestNameForChildDir()
     {
-        return new String(""+childDirUniqueID++);
+        return new String(""+getChildCount());
 
     }
 

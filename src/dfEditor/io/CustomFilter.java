@@ -26,28 +26,47 @@ import javax.swing.filechooser.*;
 
 public class CustomFilter extends FileFilter
 {
-    public final static String EXT_ANIM = "anim";
-    public final static String EXT_SPRITE = "sprites";
+    public enum eExtension
+    {
+        Sprites,
+        Anims,
+        Gifs
+    }
+    
+    public final static String EXT_ANIM = "xml";
+    public final static String EXT_SPRITE = "xml";
     public final static String EXT_GIF = "gif";
 
-    private ArrayList<String> ext = null;
+    private ArrayList<eExtension> ext = null;
 
     public CustomFilter()
     {
-        ext = new ArrayList<String>();
+        ext = new ArrayList<eExtension>();
     }
 
     public String getExtension()
     {
-        return ext.get(0);
+        return getExtensionStr(ext.get(0));
+    }
+    
+    public String getExtensionStr(eExtension eExt)
+    {
+        switch(eExt)
+        {
+            case Sprites:
+                return EXT_SPRITE;
+            case Anims:
+                return EXT_ANIM;
+            case Gifs:
+                return EXT_GIF;
+        }
+        
+        return "";
     }
 
-    public void addExtension(String aExt)
+    public void addExtension(eExtension eExt)
     {
-        if (!aExt.isEmpty())
-        {
-            ext.add(aExt);
-        }
+        ext.add(eExt);
     }
 
     public boolean accept(File f) {
@@ -60,7 +79,7 @@ public class CustomFilter extends FileFilter
         {
             for (int i=0; i<ext.size(); ++i)
             {
-                if (extension.equals(ext.get(i)))
+                if (extension.equals(getExtensionStr(ext.get(i))))
                     return true;
             }            
         }
@@ -74,17 +93,24 @@ public class CustomFilter extends FileFilter
         for (int i=0; i<ext.size(); ++i)
         {
             String verbose = null;
-            String extension = ext.get(i);
-            if (extension.equals(EXT_ANIM))
-                verbose = "Animations";
-            else if (extension.equals(EXT_SPRITE))
-                verbose = "Spritesheets";
-            else if (extension.equals(EXT_GIF))
-                verbose = "Gif animated image";
+            eExtension eExt = ext.get(i);
+            
+            switch(eExt)
+            {
+                case Sprites:
+                    verbose = "Spritesheets";
+                    break;
+                case Anims:
+                    verbose = "Animations";
+                    break;
+                case Gifs:
+                    verbose = "Gif animated image";
+                    break;
+            }                
 
             desc += verbose + " ";
             if (verbose != null)
-                desc += "(*."+extension+")";
+                desc += "(*."+getExtensionStr(eExt)+")";
             if (i < ext.size()-1)
                 desc += ", ";
         }

@@ -116,7 +116,7 @@ public class AnimationController extends dfEditorPanel implements
         JFileChooser chooser = fileChooser;
 
         CustomFilter filter = new CustomFilter();
-        filter.addExtension(CustomFilter.EXT_SPRITE);
+        filter.addExtension(CustomFilter.eExtension.Sprites);
         chooser.resetChoosableFileFilters();
         chooser.setFileFilter(filter);
         chooser.setDialogTitle("Select spritesheet");
@@ -265,6 +265,21 @@ public class AnimationController extends dfEditorPanel implements
         
         this.repaint();
     }
+    
+    public void keyframeAdded(Animation aAnimation, KeyFrame aFrame)
+    {
+        
+    }
+    
+    public void keyframeRemoved(Animation aAnimation, KeyFrame aFrame)
+    {
+        
+    }
+    
+    public void keyframeOrderChanged(Animation aAnimation)
+    {
+        
+    } 
 
     public void cellAdded(Animation aAnimation, AnimationCell aCell)
     {
@@ -1615,7 +1630,7 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
         JFileChooser chooser = fileChooser;
 
         CustomFilter filter = new CustomFilter();
-        filter.addExtension(CustomFilter.EXT_GIF);
+        filter.addExtension(CustomFilter.eExtension.Gifs);
         chooser.resetChoosableFileFilters();
         chooser.setFileFilter(filter);
         chooser.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -1697,7 +1712,7 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
         }
 
         AnimationSetWriter writer = new AnimationSetWriter();                
-        writer.createAnimationSet(aFile, loadedSpritesheetFile.getName(), list);
+        writer.createAnimationSet(aFile, loadedSpritesheetFile.getName().replaceFirst("[.][^.]+$", ""), list);
 
         if (helpLabel != null)
             helpLabel.setText("Animation set saved as " + aFile.toString());
@@ -1724,7 +1739,7 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
         JFileChooser chooser = fileChooser;
 
         CustomFilter filter = new CustomFilter();
-        filter.addExtension(CustomFilter.EXT_ANIM);
+        filter.addExtension(CustomFilter.eExtension.Anims);
         chooser.resetChoosableFileFilters();
         chooser.setFileFilter(filter);
         chooser.setDialogType(JFileChooser.SAVE_DIALOG);

@@ -105,6 +105,21 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
         this.commandManager = aManager;
     }
     
+    public void keyframeAdded(Animation aAnimation, KeyFrame aFrame)
+    {
+        
+    }
+    
+    public void keyframeRemoved(Animation aAnimation, KeyFrame aFrame)
+    {
+        
+    }
+    
+    public void keyframeOrderChanged(Animation aAnimation)
+    {
+        
+    }    
+    
     public void cellAdded(Animation aAnimation, AnimationCell aCell)
     {
         if (aAnimation == animation)
