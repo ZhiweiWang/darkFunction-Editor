@@ -25,6 +25,7 @@ import org.w3c.dom.*;
 import javax.swing.tree.DefaultTreeModel;
 import dfEditor.CustomNode;
 import dfEditor.SelectionBox;
+import dfEditor.resources.PathUtils;
 import java.awt.Rectangle;
 
 /**
@@ -63,10 +64,9 @@ public class SpritesheetReader
             return null;
         
         String imgName = ((Element)imgList.item(0)).getAttribute("name");
-
-        String fullFileName = file.getParentFile().getPath() + "/" + imgName;
-
-        return fullFileName;
+        String imgPath = ((Element)imgList.item(0)).getAttribute("imgpath");
+        
+        return PathUtils.absolutePath(imgPath, file.getParent());
     }
 
     public DefaultTreeModel getTreeModel()
