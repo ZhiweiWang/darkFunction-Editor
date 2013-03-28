@@ -54,10 +54,12 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
     private int insertBeforeSlotIndex = -1;
     private Timer timer = null;
     private int currentSlotInAnimation = -1;
-    private int currentSlotInAnimationFramesLeft = -1;
     private ArrayList<AnimationStripListener> stripListeners = null;
     private CommandManager commandManager = null;
-
+    
+    private long LastEvtTime= 0;
+    private long msIntoCell = 0;
+    
     public AnimationStripPanel()
     {
         super();
@@ -360,8 +362,9 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
         currentSlotInAnimation = getSelectedSlotIndex();
         if (getSelectedSlotIndex() < 0)
             currentSlotInAnimation = 0;
-
-        currentSlotInAnimationFramesLeft = slotList.get(currentSlotInAnimation).getCell().getDelay();
+      
+        LastEvtTime = System.currentTimeMillis();
+        msIntoCell  = 0;
 
         notifyTick();
 
@@ -421,23 +424,44 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
 
     public void actionPerformed(ActionEvent e)
     {
-        currentSlotInAnimationFramesLeft --;
-        if (currentSlotInAnimationFramesLeft <= 0)
+        int oldCell = currentSlotInAnimation;
+        
+        long currTime   = System.currentTimeMillis();
+        long deltaTime  = currTime - LastEvtTime;
+        
+        AnimationCell currentCell = null;
+        
+        while(true)
         {
-            currentSlotInAnimation ++;
-            currentSlotInAnimation %= slotList.size();
-                        
-            currentSlotInAnimationFramesLeft = slotList.get(currentSlotInAnimation).getCell().getDelay();
-                        
-            if (currentSlotInAnimation == 0)
-            {          
-                if (!animation.getLoops())
-                    this.stop();
+            currentCell = slotList.get(currentSlotInAnimation).getCell();
+            
+            long temp = deltaTime;
+            deltaTime -= (currentCell.getDelay() - msIntoCell);
+            
+            if(deltaTime >= 0)
+            {
+                msIntoCell = 0;
+                currentSlotInAnimation ++;
+                currentSlotInAnimation %= slotList.size();
             }
+            else
+            {
+                msIntoCell += temp;
+                break;
+            }
+        }
+
+        // Stop non-looping animations
+        if (currentSlotInAnimation < oldCell && !animation.getLoops())
+        {
+            this.stop();
+            currentSlotInAnimation = 0;
         }
 
         if (currentSlotInAnimation != -1)
             notifyTick();
+        
+        LastEvtTime = currTime;
 
         repaint();
     }
