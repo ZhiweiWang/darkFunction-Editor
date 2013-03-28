@@ -108,7 +108,7 @@ public class AnimationSetReader
         if (loopsStr != null && loopsStr.length() != 0)
         {
             int loops = Integer.parseInt(loopsStr);
-            animation.setLoops(loops);
+            animation.setLoops(loops > 0);
         }
 
         NodeList nodeList = animNode.getChildNodes();
@@ -148,7 +148,7 @@ public class AnimationSetReader
         if (loopsStr != null && loopsStr.length() != 0)
         {
             int loops = Integer.parseInt(loopsStr);
-            animation.setLoops(loops);
+            animation.setLoops(loops > 0);
         }
 
         NodeList nodeList = animNode.getChildNodes();

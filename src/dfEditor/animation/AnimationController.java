@@ -350,9 +350,9 @@ public class AnimationController extends dfEditorPanel implements
         removeCellButton = new javax.swing.JButton();
         animationStripScrollPane = new javax.swing.JScrollPane();
         animationStripPanel = new dfEditor.animation.AnimationStripPanel();
-        loopSpinner = new javax.swing.JSpinner();
         loopLabel = new javax.swing.JLabel();
         addMultipleCellsButton = new javax.swing.JButton();
+        loopCheck = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         spriteTree = new dfEditor.SpriteTree();
@@ -626,15 +626,6 @@ public class AnimationController extends dfEditorPanel implements
 
         animationStripScrollPane.setViewportView(animationStripPanel);
 
-        loopSpinner.setEnabled(false);
-        loopSpinner.setMaximumSize(new java.awt.Dimension(3000, 3000));
-        loopSpinner.setName("loopSpinner"); // NOI18N
-        loopSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                loopSpinnerStateChanged(evt);
-            }
-        });
-
         loopLabel.setText(resourceMap.getString("loopLabel.text")); // NOI18N
         loopLabel.setName("loopLabel"); // NOI18N
 
@@ -655,26 +646,34 @@ public class AnimationController extends dfEditorPanel implements
             }
         });
 
+        loopCheck.setText(resourceMap.getString("loopCheck.text")); // NOI18N
+        loopCheck.setEnabled(false);
+        loopCheck.setName("loopCheck"); // NOI18N
+        loopCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loopCheckActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(animationStripScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addComponent(animationStripScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(addMultipleCellsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addCellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(removeCellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(delaySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(loopLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loopSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(loopCheck))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -682,27 +681,20 @@ public class AnimationController extends dfEditorPanel implements
                 .addComponent(animationStripScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(delaySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(loopLabel)
-                                    .addComponent(loopSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(45, 45, 45))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(addCellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(removeCellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap()))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(addMultipleCellsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(addCellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(removeCellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addMultipleCellsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loopCheck)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(loopLabel)
+                        .addComponent(delaySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
+                .addGap(37, 37, 37))
         );
 
         addMultipleCellsButton.getAccessibleContext().setAccessibleName(resourceMap.getString("addMultipleCellsButton.AccessibleContext.accessibleName")); // NOI18N
+        loopCheck.getAccessibleContext().setAccessibleDescription(resourceMap.getString("loopCheck.AccessibleContext.accessibleDescription")); // NOI18N
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
         jPanel4.setFocusable(false);
@@ -1040,13 +1032,13 @@ public class AnimationController extends dfEditorPanel implements
                 .addGroup(viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(viewPanelLayout.createSequentialGroup()
                         .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addComponent(zoomInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(zoomOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(viewPanelLayout.createSequentialGroup()
                         .addComponent(spriteListControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(463, Short.MAX_VALUE))))
+                        .addContainerGap(460, Short.MAX_VALUE))))
         );
         viewPanelLayout.setVerticalGroup(
             viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1379,18 +1371,6 @@ public class AnimationController extends dfEditorPanel implements
         //addNodeToCell(selectedNode, workingCell);
     }//GEN-LAST:event_addToFrameButtonActionPerformed
 
-    private void loopSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_loopSpinnerStateChanged
-        JSpinner spinner = (JSpinner)evt.getSource();
-
-        Animation animation = getWorkingAnimation();
-        if (animation != null)
-        {
-            int value = (Integer)spinner.getValue();
-            animation.setLoops(value);
-            spinner.setValue(animation.getLoops()); // verify
-        }
-    }//GEN-LAST:event_loopSpinnerStateChanged
-
     private void removeSpriteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSpriteButtonActionPerformed
         Animation animation = getWorkingAnimation();
         AnimationCell cell =  animationStripPanel.selectedCell();
@@ -1684,6 +1664,17 @@ private void addMultipleCellsButtonActionPerformed(java.awt.event.ActionEvent ev
     
     animationStripPanel.repaint();
 }//GEN-LAST:event_addMultipleCellsButtonActionPerformed
+
+private void loopCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopCheckActionPerformed
+    JCheckBox box = (JCheckBox)evt.getSource();
+    
+    Animation animation = getWorkingAnimation();
+    if (animation != null)
+    {
+        animation.setLoops(box.isSelected());
+        box.setSelected(animation.getLoops());
+    }
+}//GEN-LAST:event_loopCheckActionPerformed
 
     public void saveGifAs()
     {        
@@ -2063,8 +2054,8 @@ private void addMultipleCellsButtonActionPerformed(java.awt.event.ActionEvent ev
                     addMultipleCellsButton.setEnabled(true);
                     addCellButton.setEnabled(true);
                     playButton.setEnabled(selectedAnimation.numCells() > 1);
-                    loopSpinner.setEnabled(true);
-                    loopSpinner.setValue(selectedAnimation.getLoops());
+                    loopCheck.setEnabled(true);
+                    loopCheck.setSelected(selectedAnimation.getLoops());
                 }
                 else
                 {
@@ -2076,7 +2067,7 @@ private void addMultipleCellsButtonActionPerformed(java.awt.event.ActionEvent ev
                     addMultipleCellsButton.setEnabled(false);
                     addCellButton.setEnabled(false);
                     playButton.setEnabled(false);
-                    loopSpinner.setEnabled(false);
+                    loopCheck.setEnabled(false);
                 }
 
                 boolean bEnabled = (! ((DefaultMutableListModel)list.getModel()).isEmpty()) && (list.getSelectedIndex() >= 0);
@@ -2235,8 +2226,8 @@ private void addMultipleCellsButtonActionPerformed(java.awt.event.ActionEvent ev
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JCheckBox loopCheck;
     private javax.swing.JLabel loopLabel;
-    private javax.swing.JSpinner loopSpinner;
     private javax.swing.JToggleButton modifySpriteToggle;
     private javax.swing.JCheckBox onionSkinsCheckBox;
     private javax.swing.JButton playButton;

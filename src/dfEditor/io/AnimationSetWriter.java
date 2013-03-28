@@ -91,7 +91,7 @@ public class AnimationSetWriter
          }
          aXmlWriter.writeEntity((bIsSimple ? "simple" : "compound") + "_anim");
          aXmlWriter.writeAttribute("name", aAnimation.getName());
-         aXmlWriter.writeAttribute("loops", aAnimation.getLoops());
+         aXmlWriter.writeAttribute("loops", aAnimation.getLoops() ? 1 : 0);
          
          aAnimation.setCurrentKeyFrameIndex(0);
          KeyFrame frame = aAnimation.getCurrentKeyFrame();

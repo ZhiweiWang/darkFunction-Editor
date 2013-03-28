@@ -57,7 +57,6 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
     private int currentSlotInAnimationFramesLeft = -1;
     private ArrayList<AnimationStripListener> stripListeners = null;
     private CommandManager commandManager = null;
-    int currentLoop = 0;
 
     public AnimationStripPanel()
     {
@@ -353,8 +352,6 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
         if (slotList.size() == 0)
             return;
         
-        currentLoop = animation.getLoops();
-        
         if (timer == null)
             timer = new Timer(30, this);
 
@@ -434,7 +431,7 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
                         
             if (currentSlotInAnimation == 0)
             {          
-                if (--currentLoop == 0)
+                if (!animation.getLoops())
                     this.stop();
             }
         }

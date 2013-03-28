@@ -359,21 +359,20 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="animationStripScrollPane" alignment="0" pref="409" max="32767" attributes="0"/>
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <Component id="addMultipleCellsButton" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="addCellButton" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="removeCellButton" min="-2" pref="30" max="-2" attributes="0"/>
-                  <EmptySpace pref="72" max="32767" attributes="0"/>
+                  <EmptySpace pref="141" max="32767" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="delaySpinner" min="-2" pref="41" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="loopLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="loopSpinner" min="-2" pref="41" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="loopCheck" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -383,33 +382,19 @@
                   <Component id="animationStripScrollPane" min="-2" pref="112" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                      <Component id="delaySpinner" alignment="3" min="-2" max="-2" attributes="1"/>
-                                      <Component id="jLabel1" alignment="3" max="32767" attributes="1"/>
-                                  </Group>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="loopLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="loopSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="addCellButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="removeCellButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="addCellButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="removeCellButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="addMultipleCellsButton" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Component id="addMultipleCellsButton" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="loopCheck" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="loopLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="delaySpinner" alignment="3" min="-2" max="-2" attributes="1"/>
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="1"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -516,18 +501,6 @@
             </Container>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JSpinner" name="loopSpinner">
-          <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[3000, 3000]"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="loopSpinner" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="loopSpinnerStateChanged"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="loopLabel">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="loopLabel.text"/>
@@ -559,6 +532,19 @@
           </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addMultipleCellsButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="loopCheck">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="loopCheck.text"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="loopCheck" noResource="true"/>
+          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" resourceKey="loopCheck.AccessibleContext.accessibleDescription"/>
+          </AccessibilityProperties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loopCheckActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

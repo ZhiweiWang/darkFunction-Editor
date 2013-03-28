@@ -38,7 +38,7 @@ public class AnimatedGifEncoder {
 
   protected int transIndex; // transparent index in color table
 
-  protected int repeat = -1; // no repeat
+  protected boolean repeat = false; // no repeat
 
   protected int delay = 0; // frame delay (hundredths)
 
@@ -104,10 +104,8 @@ public class AnimatedGifEncoder {
    *          int number of iterations.
    * @return
    */
-  public void setRepeat(int iter) {
-    if (iter >= 0) {
-      repeat = iter;
-    }
+  public void setRepeat(boolean aRepeat) {
+      repeat = aRepeat;
   }
 
   /**
@@ -151,7 +149,8 @@ public class AnimatedGifEncoder {
       if (firstFrame) {
         writeLSD(); // logical screen descriptior
         writePalette(); // global color table
-        if (repeat >= 0) {
+        if (repeat)
+        {
           // use NS app extension to indicate reps
           writeNetscapeExt();
         }
@@ -453,7 +452,7 @@ public class AnimatedGifEncoder {
     writeString("NETSCAPE" + "2.0"); // app id + auth code
     out.write(3); // sub-block size
     out.write(1); // loop sub-block id
-    writeShort(repeat); // loop count (extra iterations, 0=repeat forever)
+    writeShort(repeat == true ? 0 : 1); // loop count (extra iterations, 0=repeat forever)
     out.write(0); // block terminator
   }
 

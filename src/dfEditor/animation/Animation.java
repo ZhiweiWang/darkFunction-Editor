@@ -34,7 +34,7 @@ public class Animation implements NamedElement
     private int currentKeyIndex;
     private int currentCellIndex;
     private ArrayList<AnimationDataListener> animationListeners;
-    private int loops = 0;
+    private boolean loops = true;
 
     public Animation(String aName)
     {
@@ -183,15 +183,12 @@ public class Animation implements NamedElement
         }
     }
 
-    public void setLoops(final int aLoops)
+    public void setLoops(final boolean aLoops)
     {
         this.loops = aLoops;
-
-        if (this.loops < 0)
-            this.loops = 0;
     }
 
-    public int getLoops()
+    public boolean getLoops()
     {
         return loops;
     }
