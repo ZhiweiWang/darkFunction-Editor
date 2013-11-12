@@ -16,7 +16,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with darkFunction Editor.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package dfEditor.commands;
 
 import dfEditor.commands.*;
@@ -28,8 +27,8 @@ import java.awt.Color;
  *
  * @author s4m20
  */
-public class AddGraphicToSheetCommand extends UndoableCommand
-{
+public class AddGraphicToSheetCommand extends UndoableCommand {
+
     private CustomNode _parentNode;
     private GraphicPanel _graphicPanel;
     private SpriteTree _tree;
@@ -37,37 +36,38 @@ public class AddGraphicToSheetCommand extends UndoableCommand
 
     private UndoableCommand _newNodeCommand;
     private CustomNode _newNode;
-    
+
     public AddGraphicToSheetCommand(
             final SpriteTree aTree,
             final CustomNode aParentNode,
             final GraphicPanel aGraphicPanel,
-            final GraphicObject aGraphic)
-    {        
+            final GraphicObject aGraphic) {
         _parentNode = aParentNode;
         _tree = aTree;
         _graphicPanel = aGraphicPanel;
 
-        _newNode = new CustomNode(_parentNode.suggestNameForChildLeaf(), false);
+        if (((SpriteGraphic) aGraphic).getPreferName().length()==0) {
+            _newNode = new CustomNode(_parentNode.suggestNameForChildLeaf(), false);
+        } else {
+            _newNode = new CustomNode(((SpriteGraphic) aGraphic).getPreferName(), false);
+        }
         _newNodeCommand = new AddLeafNodeCommand(_tree, _parentNode, _newNode);
 
         _graphic = aGraphic;
         _graphic.addObserver(_tree);
     }
 
-    public boolean execute()
-    {        
+    public boolean execute() {
         _graphicPanel.unselectAllGraphics();
         _newNode.setCustomObject(_graphic);
 
         _graphicPanel.addGraphic(_graphic);
-        _newNodeCommand.execute();        
-        
+        _newNodeCommand.execute();
+
         return true;
     }
 
-    public void undo()
-    {
+    public void undo() {
         _graphicPanel.removeGraphic(_graphic);
         _newNodeCommand.undo(); //undo add leaf node        
     }

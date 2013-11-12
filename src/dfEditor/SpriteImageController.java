@@ -1012,7 +1012,7 @@ public class SpriteImageController extends dfEditorPanel implements GraphicPanel
                 try
                 {
                     BufferedImage bufferedImage = ImageIO.read(selectedFiles[i]);
-                    SpriteGraphic graphic = new SpriteGraphic(bufferedImage, new java.awt.Point(0, 0), new Rectangle(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight()));
+                    SpriteGraphic graphic = new SpriteGraphic(bufferedImage, new java.awt.Point(0, 0), new Rectangle(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight()), selectedFiles[i].getName());
                     graphicList.add(graphic);
                 }
                 catch (IOException e)
