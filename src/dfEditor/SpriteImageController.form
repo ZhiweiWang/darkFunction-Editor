@@ -87,7 +87,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="809" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="944" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="509" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="530" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
@@ -123,7 +123,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jSplitPane1" pref="789" max="32767" attributes="0"/>
+                          <Component id="jSplitPane1" pref="916" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -132,7 +132,7 @@
                           <Component id="addFolderButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="removeSpriteButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="581" max="32767" attributes="0"/>
+                          <EmptySpace pref="706" max="32767" attributes="0"/>
                           <Component id="zoomInButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="zoomOutButton" min="-2" max="-2" attributes="0"/>
@@ -264,7 +264,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="658" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="785" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
