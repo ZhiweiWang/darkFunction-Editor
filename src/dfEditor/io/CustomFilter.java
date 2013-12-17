@@ -33,8 +33,8 @@ public class CustomFilter extends FileFilter
         Gifs
     }
     
-    public final static String EXT_ANIM = "xml";
-    public final static String EXT_SPRITE = "xml";
+    public final static String EXT_ANIM = "anim";
+    public final static String EXT_SPRITE = "sprites";
     public final static String EXT_GIF = "gif";
 
     private ArrayList<eExtension> ext = null;
