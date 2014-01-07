@@ -16,8 +16,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with darkFunction Editor.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
 package dfEditor;
 
 import dfEditor.animation.AnimationController;
@@ -34,18 +32,19 @@ import java.awt.event.*;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
+
 /**
  * The application's main frame.
  */
-public class dfEditorView extends FrameView implements TaskChangeListener, org.jdesktop.application.Application.ExitListener
-{
+public class dfEditorView extends FrameView implements TaskChangeListener, org.jdesktop.application.Application.ExitListener {
+
     private JFileChooser fileChooser;
 
     public dfEditorView(dfEditorApp app) {
         super(app);
 
         fileChooser = new JFileChooser();
-        
+
         initComponents();
 
         helpLabel.setText("http://www.darkfunction.com");
@@ -61,22 +60,17 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
                 dfEditorApp.getApplication().exit();
             }
         });
-        
-    }
-
-    public void willExit(java.util.EventObject aObj)
-    {
 
     }
 
-    public boolean canExit(java.util.EventObject aObj)
-    {
-        for (int i=0; i<tabbedPane.getTabCount(); ++i)
-        {
-            dfEditorTask tab = (dfEditorTask)(tabbedPane.getComponentAt(i));
+    public void willExit(java.util.EventObject aObj) {
+    }
 
-            if (!tab.hasBeenModified())
-            {
+    public boolean canExit(java.util.EventObject aObj) {
+        for (int i = 0; i < tabbedPane.getTabCount(); ++i) {
+            dfEditorTask tab = (dfEditorTask) (tabbedPane.getComponentAt(i));
+
+            if (!tab.hasBeenModified()) {
                 continue;
             }
 
@@ -84,22 +78,20 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
 
             String msg = "You have not saved " + tab.getName() + ". Would you like to save it now?";
             int choice = JOptionPane.showOptionDialog(
-                               this.getFrame()                   // Center in window.
-                             , msg                          // Message
-                             , "Save changes?"                  // Title in titlebar
-                             , JOptionPane.YES_NO_OPTION    // Option type
-                             , JOptionPane.WARNING_MESSAGE    // messageType
-                             , null                         // Icon (none)
-                             , choices                      // Button text as above.
-                             , " Save "      // Default button's label
-                           );
-            switch(choice)
-            {
+                    this.getFrame() // Center in window.
+                    , msg // Message
+                    , "Save changes?" // Title in titlebar
+                    , JOptionPane.YES_NO_OPTION // Option type
+                    , JOptionPane.WARNING_MESSAGE // messageType
+                    , null // Icon (none)
+                    , choices // Button text as above.
+                    , " Save " // Default button's label
+                    );
+            switch (choice) {
                 case 0:
-                    if (tab.save())
+                    if (tab.save()) {
                         tabbedPane.remove(i);
-                    else
-                    {
+                    } else {
                         return false;
                     }
                     break;
@@ -115,7 +107,6 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         }
         return true;
     }
-
 
     @Action
     public void showAboutBox() {
@@ -323,37 +314,28 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-
-   
     private void menuItemSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSaveAsActionPerformed
-        dfEditorTask currentTab = (dfEditorTask)tabbedPane.getSelectedComponent();
+        dfEditorTask currentTab = (dfEditorTask) tabbedPane.getSelectedComponent();
 
-        if (currentTab != null)
-        {
-            if (currentTab.saveAs())
-            {
+        if (currentTab != null) {
+            if (currentTab.saveAs()) {
                 java.io.File file = currentTab.getSavedFile();
-                if (file != null && file.exists())
-                {
-                    tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), file.getName());   
+                if (file != null && file.exists()) {
+                    tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), file.getName());
                 }
-            }    
-        }            
+            }
+        }
     }//GEN-LAST:event_menuItemSaveAsActionPerformed
 
-    
-
     private void undoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuItemActionPerformed
-        ((dfEditorTask)tabbedPane.getSelectedComponent()).undo();
+        ((dfEditorTask) tabbedPane.getSelectedComponent()).undo();
     }//GEN-LAST:event_undoMenuItemActionPerformed
 
     private void redoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuItemActionPerformed
-        ((dfEditorTask)tabbedPane.getSelectedComponent()).redo();
+        ((dfEditorTask) tabbedPane.getSelectedComponent()).redo();
     }//GEN-LAST:event_redoMenuItemActionPerformed
 
-    private void addTab(java.awt.Component c)
-    {
+    private void addTab(java.awt.Component c) {
         tabbedPane.add(c);
         tabbedPane.setTabComponentAt(tabbedPane.indexOfComponent(c), new TabComponent(tabbedPane));
         tabbedPane.setSelectedComponent(c);
@@ -361,7 +343,7 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
 
     private void newSpritesheetItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSpritesheetItemActionPerformed
         //Custom button text
-     
+
         JFrame frame = this.getFrame();
         SingleOrMultiDialog dialog = new SingleOrMultiDialog(frame, true);
         dialog.setLocationRelativeTo(frame);
@@ -369,22 +351,20 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         int result = dialog.showDialog();
 
         dfEditorPanel panel = null;
-        switch (result)
-        {
-            case 0:
-            {
+        switch (result) {
+            case 0: {
                 panel = new SpritesheetController(new CommandManager(undoMenuItem, redoMenuItem), true, helpLabel, this, fileChooser);
                 break;
             }
-            case 1:
-            {
+            case 1: {
                 panel = new SpriteImageController(new CommandManager(undoMenuItem, redoMenuItem), helpLabel, this, fileChooser);
                 break;
             }
         }
 
-        if (panel != null)
+        if (panel != null) {
             addTab(panel);
+        }
 
 }//GEN-LAST:event_newSpritesheetItemActionPerformed
 
@@ -392,8 +372,7 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         load();
     }//GEN-LAST:event_loadMenuItemActionPerformed
 
-    public void load()
-    {
+    public void load() {
         JFileChooser chooser = fileChooser;
 
         CustomFilter filter = new CustomFilter();
@@ -404,92 +383,80 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         chooser.setDialogTitle("Load a spritesheet / animation set");
         JFrame mainFrame = dfEditorApp.getApplication().getMainFrame();
         int returnVal = chooser.showOpenDialog(mainFrame);
-        if(returnVal == JFileChooser.APPROVE_OPTION)
-        {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             java.io.File selectedFile = chooser.getSelectedFile();
 
-            if (selectedFile != null && selectedFile.exists())
-            {
+            if (selectedFile != null && selectedFile.exists()) {
                 java.awt.Component task = null;
 
                 boolean bLoaded = false;
-                
-                try
-                {
+
+                try {
                     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                     Document doc = builder.parse(selectedFile);
-                    
+
                     Element root = doc.getDocumentElement();
                     String rootName = root.getTagName();
-                    if(rootName == "animations")
-                    {
+                    if (rootName == "animations") {
                         AnimationController animController = new AnimationController(new CommandManager(undoMenuItem, redoMenuItem), false, helpLabel, this, fileChooser);
-                        try
-                        {
+                        try {
                             AnimationSetReader reader = new AnimationSetReader(selectedFile);
-                            bLoaded = animController.load(reader);                    
+                            bLoaded = animController.load(reader);
                             task = animController;
-                            if (helpLabel != null)
+                            if (helpLabel != null) {
                                 helpLabel.setText("Loaded animations " + selectedFile.toString());
-                        }
-                        catch (Exception e)
-                        {
+                            }
+                        } catch (Exception e) {
                             javax.swing.JOptionPane.showMessageDialog(null, "Could not load animation file!", "File error", JOptionPane.ERROR_MESSAGE);
-                        }                       
-                    }
-                    else if(rootName == "img")
-                    {
+                        }
+                    } else if (rootName == "img") {
                         JFrame frame = this.getFrame();
-                    SingleOrMultiDialog dialog = new SingleOrMultiDialog(frame, true);
-                    dialog.setLocationRelativeTo(frame);
-                                        
-                    SpritesheetReader reader = new SpritesheetReader(selectedFile);
-                    String imagePath = reader.getImagePath();
-                    DefaultTreeModel model = reader.getTreeModel();         
+                        SingleOrMultiDialog dialog = new SingleOrMultiDialog(frame, true);
+                        dialog.setLocationRelativeTo(frame);
 
-                    int result = dialog.showDialog();
-                    
-                    switch (result)
-                    {
-                        case 0:
-                        {
-                            SpritesheetController spriteSheet = new SpritesheetController(new CommandManager(undoMenuItem, redoMenuItem), false, helpLabel, this, fileChooser);
-                            bLoaded = spriteSheet.load(imagePath, model);
-                            task = spriteSheet;
-                            break;
+                        SpritesheetReader reader = new SpritesheetReader(selectedFile);
+                        String imagePath = reader.getImagePath();
+                        DefaultTreeModel model = reader.getTreeModel();
+
+                        int result = dialog.showDialog();
+
+                        switch (result) {
+                            case 0: {
+                                SpritesheetController spriteSheet = new SpritesheetController(new CommandManager(undoMenuItem, redoMenuItem), false, helpLabel, this, fileChooser);
+                                bLoaded = spriteSheet.load(imagePath, model);
+                                task = spriteSheet;
+                                break;
+                            }
+                            case 1: {
+                                SpriteImageController spriteSheet = new SpriteImageController(new CommandManager(undoMenuItem, redoMenuItem), helpLabel, this, fileChooser);
+                                bLoaded = spriteSheet.load(imagePath, model);
+                                task = spriteSheet;
+                                break;
+                            }
                         }
-                        case 1:
-                        {
-                            SpriteImageController spriteSheet = new SpriteImageController(new CommandManager(undoMenuItem, redoMenuItem), helpLabel, this, fileChooser);
-                            bLoaded = spriteSheet.load(imagePath, model);
-                            task = spriteSheet;
-                            break;
+
+                        if (helpLabel != null) {
+                            helpLabel.setText("Loaded spritesheet " + selectedFile.toString());
                         }
-                    }                              
-
-                    if (helpLabel != null)
-                        helpLabel.setText("Loaded spritesheet " + selectedFile.toString());
-                    }                    
-                }
-                catch (Exception e)
-                {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Could not load file!", "File error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (org.xml.sax.SAXParseException e) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Parsing error at row: "+e.getLineNumber()+" ! Exception: "+e.getMessage(), "File error", JOptionPane.ERROR_MESSAGE);
+                    System.gc();
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Could not load file! Exception: "+e, "File error", JOptionPane.ERROR_MESSAGE);
                 }
 
-                if (bLoaded && task != null)
-                {
+                if (bLoaded && task != null) {
                     addTab(task);
-                    ((dfEditorTask)task).setSavedFile(selectedFile);
+                    ((dfEditorTask) task).setSavedFile(selectedFile);
                     tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), selectedFile.getName());
                 }
-            }
-            else
-            {
+            } else {
                 JOptionPane.showMessageDialog(
-                   null,
-                   "No such file exists",
-                   "File not found",
-                   JOptionPane.ERROR_MESSAGE);            
+                        null,
+                        "No such file exists",
+                        "File not found",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -508,46 +475,39 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void menuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSaveActionPerformed
-        dfEditorTask currentTab = (dfEditorTask)tabbedPane.getSelectedComponent();
+        dfEditorTask currentTab = (dfEditorTask) tabbedPane.getSelectedComponent();
 
-        if (currentTab != null)
-        {
-            if (currentTab.save())
-            {
+        if (currentTab != null) {
+            if (currentTab.save()) {
                 java.io.File file = currentTab.getSavedFile();
-            
-                if (file != null && file.exists())                            
-                {                
+
+                if (file != null && file.exists()) {
                     String saveName = file.getName();
-                    if (saveName != null && saveName.length() > 0)
-                    {
+                    if (saveName != null && saveName.length() > 0) {
                         tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), saveName);
                     }
                 }
-            }                
+            }
         }
     }//GEN-LAST:event_menuItemSaveActionPerformed
 
-    private void updateMenuBar()
-    {
-        dfEditorTask selectedTask = (dfEditorTask)(tabbedPane.getSelectedComponent());
+    private void updateMenuBar() {
+        dfEditorTask selectedTask = (dfEditorTask) (tabbedPane.getSelectedComponent());
 
-        if (selectedTask != null)
-        {
+        if (selectedTask != null) {
             String savedName = null;
-            if (selectedTask.getSavedFile() != null)
+            if (selectedTask.getSavedFile() != null) {
                 savedName = selectedTask.getSavedFile().getName();
-            
-            if (selectedTask.hasBeenModified())
-            {
-                if (savedName != null)
-                    tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(),  "*" + savedName);
+            }
+
+            if (selectedTask.hasBeenModified()) {
+                if (savedName != null) {
+                    tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), "*" + savedName);
+                }
 
                 menuItemSaveAs.setEnabled(true);
                 menuItemSave.setEnabled(true);
-            }
-            else
-            {
+            } else {
                 menuItemSaveAs.setEnabled(false);
                 menuItemSave.setEnabled(false);
             }
@@ -556,13 +516,10 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         }
     }
 
-    public void taskChanged(dfEditorTask aTask)
-    {
+    public void taskChanged(dfEditorTask aTask) {
         // TODO: this ignores arg and uses current task
         updateMenuBar();
     }
-
- 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenu editMenu;
@@ -580,12 +537,5 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JMenuItem undoMenuItem;
     // End of variables declaration//GEN-END:variables
-
     private JDialog aboutBox;
-
-
-
 }
-
-
-
